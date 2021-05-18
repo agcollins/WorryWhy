@@ -25,7 +25,7 @@ interface WorryDao {
     suspend fun deleteAll()
 
     @Insert
-    fun addWorry(worry: Worry)
+    suspend fun addWorry(worry: Worry)
 }
 
 @Database(entities = [Worry::class], version = 1)
