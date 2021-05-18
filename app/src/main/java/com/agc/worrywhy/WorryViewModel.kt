@@ -10,21 +10,13 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class WorryViewModel(application: Application) : AndroidViewModel(application) {
-    private val database by lazy {
-        Room.databaseBuilder<AppDatabase>(
-            application.applicationContext,
-            AppDatabase::class.java,
-            "app"
-        ).build()
-    }
+    private val dao = Room.databaseBuilder<AppDatabase>(
+        application.applicationContext,
+        AppDatabase::class.java,
+        "app"
+    ).build().worryDao()
 
-    private val dao by lazy {
-        database.worryDao()
-    }
-
-    val worries by lazy {
-        dao.getAll().flowOn(Dispatchers.Default).asLiveData()
-    }
+    val worries = dao.getAll().flowOn(Dispatchers.Default).asLiveData()
 
     fun addWorry(text: String) {
         viewModelScope.launch {
