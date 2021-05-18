@@ -1,6 +1,7 @@
 package com.agc.worrywhy
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 
 @Entity
@@ -18,7 +19,10 @@ class Worry(
 @Dao
 interface WorryDao {
     @Query("SELECT * FROM Worry")
-    fun getAll(): List<Worry>
+    fun getAll(): Flow<List<Worry>>
+
+    @Query("DELETE FROM Worry")
+    suspend fun deleteAll()
 
     @Insert
     fun addWorry(worry: Worry)
