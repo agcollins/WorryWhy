@@ -21,5 +21,11 @@ class WorryListViewModel @Inject constructor(
             worryDao.deleteAll()
         }
     }
+
+    fun recordWorry(worryId: Int) {
+        viewModelScope.launch {
+
+        }
+    }
 }
 

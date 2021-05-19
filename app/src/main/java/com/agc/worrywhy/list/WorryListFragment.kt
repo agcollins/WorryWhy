@@ -13,7 +13,14 @@ import kotlinx.android.synthetic.main.fragment_worry_list.*
 @AndroidEntryPoint
 class WorryListFragment : Fragment() {
     private val worryListViewModel: WorryListViewModel by viewModels()
-    private val adapter = WorryAdapter()
+    private val adapter = WorryAdapter { worry ->
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +48,6 @@ class WorryListFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_main, menu)
     }
 
