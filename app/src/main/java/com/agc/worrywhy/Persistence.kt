@@ -52,7 +52,7 @@ object PersistenceModule {
             context,
             AppDatabase::class.java,
             "app"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
 
     @Provides
     @Singleton
