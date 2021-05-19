@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_worry_list.*
 class WorryListFragment : Fragment() {
     private val worryListViewModel: WorryListViewModel by viewModels()
     private val adapter = WorryAdapter { worry ->
-
+        worryListViewModel.recordWorry(worry.uid)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
