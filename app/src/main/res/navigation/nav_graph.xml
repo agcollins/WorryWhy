@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/worryListFragment">
+
+    <fragment
+        android:id="@+id/addWorryFragment"
+        android:name="com.agc.worrywhy.add.AddWorryFragment"
+        android:label="add_worry_fragment"
+        tools:layout="@layout/add_worry_fragment" />
+    <fragment
+        android:id="@+id/worryListFragment"
+        android:name="com.agc.worrywhy.list.WorryListFragment"
+        android:label="fragment_worry_list"
+        tools:layout="@layout/fragment_worry_list" >
+        <action
+            android:id="@+id/action_worryListFragment_to_addWorryFragment"
+            app:destination="@id/addWorryFragment" />
+    </fragment>
+</navigation>

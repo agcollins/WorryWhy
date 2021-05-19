@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class WorryAdapter(var worries: List<Worry> = emptyList()) : RecyclerView.Adapter<WorryAdapter.ViewHolder>() {
+class WorryAdapter(var worries: List<Worry> = emptyList()) :
+    RecyclerView.Adapter<WorryAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context).inflate(
             R.layout.item_worry,
