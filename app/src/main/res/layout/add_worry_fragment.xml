@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:helperText="@string/worry_helper"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/il_worry_text"
         >
@@ -23,8 +24,20 @@
             android:imeOptions="actionDone"
             android:maxLines="1"
             android:inputType="text"
+
             />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/check_current_worry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/bothering_me_now"
+        app:layout_constraintEnd_toStartOf="@+id/button_worry_add"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/il_worry_text"
+        app:layout_constraintTop_toBottomOf="@+id/il_worry_text" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_worry_add"

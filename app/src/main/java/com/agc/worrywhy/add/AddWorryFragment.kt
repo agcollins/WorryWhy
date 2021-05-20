@@ -33,7 +33,7 @@ class AddWorryFragment : Fragment() {
         }
 
         button_worry_add.setOnClickListener {
-            viewModel.addWorry(edit_text_add_worry.text.toString())
+            viewModel.addWorry(edit_text_add_worry.text.toString(), check_current_worry.isChecked)
             findNavController().popBackStack()
         }
     }
