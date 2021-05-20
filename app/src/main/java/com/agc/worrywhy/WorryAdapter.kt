@@ -36,7 +36,7 @@ internal class WorryAdapter(
         holder.content.text = worry.content
         holder.frequency.apply {
             isGone = worry.count == 0
-            text = worry.count.toString()
+            text = context.getString(R.string.times_template, worry.count)
         }
 
         // TODO -- The creation of this lambda is slow -- find another way
