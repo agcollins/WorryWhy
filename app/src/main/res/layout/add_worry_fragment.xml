@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:helperText="@string/worry_helper"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/il_worry_text"
         >

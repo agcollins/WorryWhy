@@ -2,10 +2,8 @@
     <string name="app_name">WorryWhy</string>
     <string name="action_settings">Settings</string>
     <string name="two">2</string>
-    <string name="worry_text">Having yelled at Janice</string>
+    <string name="worry_text">What\'s worrying you</string>
     <string name="add">Add</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_a_worry">Add a worry</string>
     <string name="action_remove_all">Remove all</string>
     <string name="worry_helper">Something that worries you</string>
