@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.agc.worrywhy.Worry
 import com.agc.worrywhy.WorryDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -12,9 +13,14 @@ import javax.inject.Inject
 class AddWorryViewModel @Inject constructor(
     private val worryDao: WorryDao
 ) : ViewModel() {
-    fun addWorry(text: String) {
-        viewModelScope.launch {
-            worryDao.addWorry(Worry(text))
+    fun addWorry(text: String, occurred: Boolean = true) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val worry = Worry(text)
+            if (occurred) {
+                worryDao.addWorryWithInstance(worry)
+            } else {
+                worryDao.addWorry(worry)
+            }
         }
     }
 }

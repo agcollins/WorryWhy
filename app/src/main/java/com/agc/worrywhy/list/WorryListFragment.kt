@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.agc.worrywhy.R
 import com.agc.worrywhy.WorryAdapter
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_worry_list.*
 
@@ -37,7 +38,6 @@ class WorryListFragment : Fragment() {
 
         worryListViewModel.worries.observe(viewLifecycleOwner, {
             adapter.worries = it
-            adapter.notifyDataSetChanged()
         })
 
         fab_add_worry.setOnClickListener { view ->

@@ -11,21 +11,28 @@ import kotlinx.coroutines.flow.Flow
 import java.util.*
 import javax.inject.Singleton
 
-@DatabaseView("""
-    SELECT uid, content, count
-    FROM Worry
-    JOIN (
-        SELECT COUNT(*) as count, parentUid
-        FROM WorryInstance
-    )
-    AS instances
-    ON Worry.uid = instances.parentUid
-""")
+@DatabaseView(
+    """
+        SELECT uid, content, count FROM Worry CROSS JOIN (
+            SELECT parentUid, COUNT(parentUid) AS count FROM WorryInstance GROUP BY parentUid
+        ) WorryInstance
+        ON Worry.uid = WorryInstance.parentUid
+"""
+)
 data class CompleteWorry(
     val uid: Long,
     val content: String,
     val count: Int
 )
+
+@Entity
+data class Worry(
+    @ColumnInfo(name = "content")
+    val content: String
+) {
+    @PrimaryKey(autoGenerate = true)
+    var uid: Long = 0
+}
 
 @Entity(
     foreignKeys = [ForeignKey(
@@ -34,35 +41,57 @@ data class CompleteWorry(
         childColumns = ["parentUid"],
         onDelete = ForeignKey.CASCADE,
         onUpdate = ForeignKey.CASCADE
-    )]
+    )],
+    indices = [
+        Index(value = ["parentUid"])
+    ]
 )
-class WorryInstance(val parentUid: Int, val date: Date = Date()) {
-    @PrimaryKey
-    var uid: Int = 0
+data class WorryInstance(val parentUid: Long, val date: Date = Date()) {
+    @PrimaryKey(autoGenerate = true)
+    var uid: Long = 0
 }
 
-@Entity
-class Worry(
-    @ColumnInfo(name = "content")
-    val content: String
-) {
-    @PrimaryKey(autoGenerate = true)
-    var uid: Int = 0
-}
+data class WorryWithInstances(
+    @Embedded val worry: Worry,
+    @Relation(
+        parentColumn = "uid",
+        entityColumn = "parentUid"
+    ) val instances: List<WorryInstance>
+)
 
 @Dao
 interface WorryDao {
     @Query("SELECT * FROM Worry")
     fun getAll(): Flow<List<Worry>>
 
+    @Query("SELECT * FROM CompleteWorry")
+    fun getAllComplete(): Flow<List<CompleteWorry>>
+
     @Query("DELETE FROM Worry")
     suspend fun deleteAll()
 
     @Insert
-    suspend fun addWorry(worry: Worry)
+    suspend fun addWorry(worry: Worry): Long
+
+    @Insert
+    suspend fun addWorryInstance(worryInstance: WorryInstance): Long
+
+    @Query("DELETE FROM WorryInstance WHERE uid = (SELECT uid FROM WorryInstance ORDER BY date DESC)")
+    suspend fun removeLatestWorryInstance()
+
+    @Transaction
+    suspend fun addWorryWithInstance(worry: Worry) {
+        val worryInstance = WorryInstance(addWorry(worry))
+        addWorryInstance(worryInstance)
+    }
 }
 
-@Database(entities = [Worry::class], version = 2)
+@Database(
+    entities = [Worry::class, WorryInstance::class],
+    views = [CompleteWorry::class],
+    version = 4
+)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun worryDao(): WorryDao
 }

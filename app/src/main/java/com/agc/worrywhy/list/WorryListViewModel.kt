@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.agc.worrywhy.WorryDao
+import com.agc.worrywhy.WorryInstance
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -14,17 +15,23 @@ import javax.inject.Inject
 class WorryListViewModel @Inject constructor(
     private val worryDao: WorryDao
 ) : ViewModel() {
-    val worries = worryDao.getAll().flowOn(Dispatchers.Default).asLiveData()
+    val worries = worryDao.getAllComplete().flowOn(Dispatchers.IO).asLiveData()
 
     fun removeAllWorries() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             worryDao.deleteAll()
         }
     }
 
-    fun recordWorry(worryId: Int) {
-        viewModelScope.launch {
+    fun recordWorry(worryId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            worryDao.addWorryInstance(WorryInstance(worryId))
+        }
+    }
 
+    fun unRecordWorry() {
+        viewModelScope.launch(Dispatchers.IO) {
+            worryDao.removeLatestWorryInstance()
         }
     }
 }
