@@ -13,10 +13,14 @@ import javax.inject.Singleton
 
 @DatabaseView(
     """
-        SELECT uid, content, count FROM Worry CROSS JOIN (
-            SELECT parentUid, COUNT(parentUid) AS count FROM WorryInstance GROUP BY parentUid
-        ) WorryInstance
-        ON Worry.uid = WorryInstance.parentUid
+        SELECT uid, content, MAX(count) as count FROM (
+            SELECT uid, content, count FROM Worry 
+            CROSS JOIN (
+                SELECT parentUid, COUNT(parentUid) AS count FROM WorryInstance GROUP BY parentUid
+            ) WorryInstance
+            ON Worry.uid = WorryInstance.parentUid
+            UNION SELECT uid, content, 0 FROM Worry
+        ) GROUP BY uid
 """
 )
 data class CompleteWorry(
@@ -89,7 +93,7 @@ interface WorryDao {
 @Database(
     entities = [Worry::class, WorryInstance::class],
     views = [CompleteWorry::class],
-    version = 4
+    version = 7
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
