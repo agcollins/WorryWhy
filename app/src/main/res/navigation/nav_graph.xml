@@ -17,6 +17,7 @@
         tools:layout="@layout/fragment_worry_list" >
         <action
             android:id="@+id/action_worryListFragment_to_addWorryFragment"
-            app:destination="@id/addWorryFragment" />
+            app:destination="@id/addWorryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"/>
     </fragment>
 </navigation>
