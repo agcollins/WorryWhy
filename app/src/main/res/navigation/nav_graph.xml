@@ -18,6 +18,7 @@
         <action
             android:id="@+id/action_worryListFragment_to_addWorryFragment"
             app:destination="@id/addWorryFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"/>
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 </navigation>
