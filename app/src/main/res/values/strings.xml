@@ -10,4 +10,5 @@
     <string name="worry_helper">Something that worries you</string>
     <string name="bothering_me_now">Bothering you now</string>
     <string name="delete">Delete</string>
+    <string name="details">Details</string>
 </resources>

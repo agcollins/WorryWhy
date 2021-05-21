@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:strokeWidth="1dp"
-    app:cardElevation="2dp"
-    android:layout_margin="2dp"
+    app:strokeWidth="@dimen/worry_stroke_width"
+    app:cardElevation="@dimen/worry_elevation"
+    android:layout_margin="@dimen/worry_margin"
     android:id="@+id/card_worry"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="24dp"
+        android:padding="@dimen/padding_worry"
         >
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -23,6 +23,7 @@
             android:textAppearance="?textAppearanceHeadline4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/text_worry_times"
             tools:text="Taxes" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -34,17 +35,27 @@
             app:layout_constraintStart_toStartOf="@+id/text_worry_content"
             app:layout_constraintTop_toBottomOf="@+id/text_worry_content"
             tools:text="@string/times_example"
-            tools:visibility="gone" />
+            tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_view_worry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/details"
+            app:layout_constraintBottom_toBottomOf="@+id/button_delete_worry"
+            app:layout_constraintEnd_toStartOf="@id/button_delete_worry"
+            app:layout_constraintStart_toEndOf="@+id/text_worry_times"
+            app:layout_constraintTop_toTopOf="@+id/button_delete_worry"
+            android:visibility="gone"
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_delete_worry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/delete"
-            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/text_worry_times" />
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
