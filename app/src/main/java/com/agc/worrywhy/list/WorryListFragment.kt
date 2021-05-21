@@ -14,9 +14,13 @@ import kotlinx.android.synthetic.main.fragment_worry_list.*
 @AndroidEntryPoint
 class WorryListFragment : Fragment() {
     private val worryListViewModel: WorryListViewModel by viewModels()
-    private val adapter = WorryAdapter { worry ->
-        worryListViewModel.recordWorry(worry.uid)
-    }
+    private val adapter = WorryAdapter(
+        clickListener = { worry ->
+            worryListViewModel.recordWorry(worry.uid)
+        }, deleteListener = { worry ->
+            worryListViewModel.deleteWorry(worry.uid)
+        }
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

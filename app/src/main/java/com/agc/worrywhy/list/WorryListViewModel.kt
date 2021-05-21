@@ -29,6 +29,12 @@ class WorryListViewModel @Inject constructor(
         }
     }
 
+    fun deleteWorry(worryId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            worryDao.deleteWorry(worryId)
+        }
+    }
+
     fun unRecordWorry() {
         viewModelScope.launch(Dispatchers.IO) {
             worryDao.removeLatestWorryInstance()

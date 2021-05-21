@@ -82,6 +82,9 @@ interface WorryDao {
     @Insert
     suspend fun addWorryInstance(worryInstance: WorryInstance): Long
 
+    @Query("DELETE FROM Worry WHERE uid = :worryId")
+    suspend fun deleteWorry(worryId: Long)
+
     @Query("DELETE FROM WorryInstance WHERE uid = (SELECT uid FROM WorryInstance ORDER BY date DESC)")
     suspend fun removeLatestWorryInstance()
 
@@ -95,7 +98,7 @@ interface WorryDao {
 @Database(
     entities = [Worry::class, WorryInstance::class],
     views = [CompleteWorry::class],
-    version = 8
+    version = 9
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
