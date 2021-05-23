@@ -1,7 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding_worry">24dp</dimen>
-    <dimen name="worry_elevation">2dp</dimen>
-    <dimen name="worry_stroke_width">1dp</dimen>
+    <dimen name="worry_elevation">4dp</dimen>
+    <dimen name="worry_stroke_width">2dp</dimen>
     <dimen name="worry_margin">2dp</dimen>
 </resources>
