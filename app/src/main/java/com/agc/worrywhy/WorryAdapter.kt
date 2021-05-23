@@ -45,10 +45,10 @@ internal class WorryAdapter(
         holder.card.setOnClickListener {
             clickListener(worry)
         }
-
-        holder.deleteButton.setOnClickListener {
-            deleteListener(worry)
-        }
+//
+//        holder.deleteButton.setOnClickListener {
+//            deleteListener(worry)
+//        }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

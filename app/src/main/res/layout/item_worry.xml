@@ -1,61 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_worry"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:strokeWidth="@dimen/worry_stroke_width"
-    app:cardElevation="@dimen/worry_elevation"
     android:layout_margin="@dimen/worry_margin"
-    android:id="@+id/card_worry"
-    >
+    app:cardElevation="@dimen/worry_elevation"
+    app:strokeWidth="@dimen/worry_stroke_width">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/padding_worry"
-        >
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_worry_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?textAppearanceHeadline4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/text_worry_times"
-            tools:text="Taxes" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_worry_times"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/button_delete_worry"
-            app:layout_constraintStart_toStartOf="@+id/text_worry_content"
-            app:layout_constraintTop_toBottomOf="@+id/text_worry_content"
-            tools:text="@string/times_example"
-            tools:visibility="visible" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_view_worry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/details"
-            app:layout_constraintBottom_toBottomOf="@+id/button_delete_worry"
-            app:layout_constraintEnd_toStartOf="@id/button_delete_worry"
-            app:layout_constraintStart_toEndOf="@+id/text_worry_times"
-            app:layout_constraintTop_toTopOf="@+id/button_delete_worry"
-            android:visibility="gone"
-            />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_delete_worry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <include layout="@layout/worry_header" />
 </com.google.android.material.card.MaterialCardView>
