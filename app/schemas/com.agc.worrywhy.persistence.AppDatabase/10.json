@@ -1,0 +1,151 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 10,
+    "identityHash": "716aa10e4c08868d09f3e236b834483f",
+    "entities": [
+      {
+        "tableName": "Worry",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `content` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "WorryInstance",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `parentUid` INTEGER NOT NULL, `date` INTEGER NOT NULL, FOREIGN KEY(`parentUid`) REFERENCES `Worry`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentUid",
+            "columnName": "parentUid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_WorryInstance_parentUid",
+            "unique": false,
+            "columnNames": [
+              "parentUid"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_WorryInstance_parentUid` ON `${TABLE_NAME}` (`parentUid`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Worry",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "parentUid"
+            ],
+            "referencedColumns": [
+              "uid"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "WorryInstanceContext",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `parentUid` INTEGER NOT NULL, `content` TEXT NOT NULL, FOREIGN KEY(`parentUid`) REFERENCES `WorryInstance`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentUid",
+            "columnName": "parentUid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_WorryInstanceContext_parentUid",
+            "unique": false,
+            "columnNames": [
+              "parentUid"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_WorryInstanceContext_parentUid` ON `${TABLE_NAME}` (`parentUid`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "WorryInstance",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "parentUid"
+            ],
+            "referencedColumns": [
+              "uid"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [
+      {
+        "viewName": "CompleteWorry",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT uid, content, MAX(count) AS count FROM (\n            SELECT uid, content, count FROM Worry \n            CROSS JOIN (\n                SELECT parentUid, COUNT(parentUid) AS count FROM WorryInstance\n                GROUP BY parentUid\n            ) WorryInstance\n            ON Worry.uid = WorryInstance.parentUid\n            UNION ALL\n                SELECT uid, content, 0 FROM Worry\n        ) GROUP BY uid"
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '716aa10e4c08868d09f3e236b834483f')"
+    ]
+  }
+}
