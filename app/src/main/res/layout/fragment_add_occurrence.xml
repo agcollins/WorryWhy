@@ -1,51 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".add.AddWorryFragment"
-    android:padding="12dp">
+    android:padding="12dp"
+    tools:context=".add.AddWorryFragment">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/il_occurrence_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"
+        app:helperText="@string/this_is_optional"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/il_worry_text"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2">
+
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_add_occurrence"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edit_text_add_worry"
-            android:hint="@string/worry_text"
+            android:hint="@string/occurrence_text"
             android:imeOptions="actionDone"
-            android:maxLines="1"
             android:inputType="text"
-            android:textAppearance="?textAppearanceHeadline5"
-            />
+            android:maxLines="1"
+            android:textAppearance="?textAppearanceHeadline5" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/check_current_worry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="@string/bothering_me_now"
-        app:layout_constraintEnd_toStartOf="@+id/button_worry_add"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/il_worry_text"
-        app:layout_constraintTop_toBottomOf="@+id/il_worry_text" />
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_worry_add"
+        android:id="@+id/button_occurrence_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/il_worry_text" />
+        app:layout_constraintTop_toBottomOf="@id/il_occurrence_text" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

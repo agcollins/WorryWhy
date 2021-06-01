@@ -2,12 +2,12 @@ package com.agc.worrywhy.list
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.agc.worrywhy.R
-import com.agc.worrywhy.WorryAdapter
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_worry_list.*
 
@@ -16,9 +16,11 @@ class WorryListFragment : Fragment() {
     private val worryListViewModel: WorryListViewModel by viewModels()
     private val adapter = WorryAdapter(
         clickListener = { worry ->
-            worryListViewModel.recordWorry(worry.uid)
-        }, deleteListener = { worry ->
-            worryListViewModel.deleteWorry(worry.uid)
+            findNavController().navigate(
+                WorryListFragmentDirections.actionWorryListFragmentToWorryFragment(
+                    worry.uid
+                )
+            )
         }
     )
 
@@ -41,14 +43,9 @@ class WorryListFragment : Fragment() {
         recycler_worries.adapter = adapter
 
         worryListViewModel.worries.observe(viewLifecycleOwner, {
+            text_no_worries.isVisible = it.isEmpty()
             adapter.worries = it
         })
-
-        fab_add_worry.setOnClickListener { view ->
-            findNavController().navigate(
-                WorryListFragmentDirections.actionWorryListFragmentToAddWorryFragment()
-            )
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -57,7 +54,13 @@ class WorryListFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_remove_all -> {
+            R.id.action_add_worry -> {
+                findNavController().navigate(
+                    WorryListFragmentDirections.actionWorryListFragmentToAddWorryFragment()
+                )
+                true
+            }
+            R.id.menu_remove_all -> {
                 worryListViewModel.removeAllWorries()
                 true
             }

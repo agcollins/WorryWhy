@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "861fbd916399f48f2815385cfee11bda",
+    "identityHash": "716aa10e4c08868d09f3e236b834483f",
     "entities": [
       {
         "tableName": "Worry",
@@ -82,6 +82,59 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "WorryInstanceContext",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `parentUid` INTEGER NOT NULL, `content` TEXT NOT NULL, FOREIGN KEY(`parentUid`) REFERENCES `WorryInstance`(`uid`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentUid",
+            "columnName": "parentUid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_WorryInstanceContext_parentUid",
+            "unique": false,
+            "columnNames": [
+              "parentUid"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_WorryInstanceContext_parentUid` ON `${TABLE_NAME}` (`parentUid`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "WorryInstance",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "parentUid"
+            ],
+            "referencedColumns": [
+              "uid"
+            ]
+          }
+        ]
       }
     ],
     "views": [
@@ -92,7 +145,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '861fbd916399f48f2815385cfee11bda')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '716aa10e4c08868d09f3e236b834483f')"
     ]
   }
 }

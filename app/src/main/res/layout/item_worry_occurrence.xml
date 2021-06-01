@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    >-->
+
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_occurrence_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/text_occurrence_datetime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_occurrence_datetime"
+        app:srcCompat="@drawable/ic_baseline_chevron_right_24"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_occurrence_datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/may_23rd_2021_2_32pm"
+        android:textAppearance="?textAppearanceBody1"
+        app:layout_constraintStart_toEndOf="@+id/image_occurrence_expand"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_occurrence_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sitting_on_couch"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/image_occurrence_expand"
+        app:layout_constraintTop_toBottomOf="@+id/text_occurrence_datetime"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/image_remove_occurrence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/remove_occurrence"
+        android:src="@drawable/ic_baseline_delete_24"
+        app:layout_constraintBottom_toBottomOf="@+id/text_occurrence_datetime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_occurrence_datetime" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--</com.google.android.material.card.MaterialCardView>-->

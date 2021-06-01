@@ -1,17 +1,17 @@
-package com.agc.worrywhy
+package com.agc.worrywhy.list
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
+import com.agc.worrywhy.persistence.CompleteWorry
+import com.agc.worrywhy.R
 import com.google.android.material.card.MaterialCardView
 
 internal class WorryAdapter(
-    private val clickListener: (CompleteWorry) -> Unit,
-    private val deleteListener: (CompleteWorry) -> Unit
+    private val clickListener: (CompleteWorry) -> Unit
 ) : RecyclerView.Adapter<WorryAdapter.ViewHolder>() {
     /**
      * The current list of worries tracked.
@@ -45,17 +45,12 @@ internal class WorryAdapter(
         holder.card.setOnClickListener {
             clickListener(worry)
         }
-//
-//        holder.deleteButton.setOnClickListener {
-//            deleteListener(worry)
-//        }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val content: TextView = itemView.findViewById(R.id.text_worry_content)
         val frequency: TextView = itemView.findViewById(R.id.text_worry_times)
         val card: MaterialCardView = itemView.findViewById(R.id.card_worry)
-        val deleteButton: Button = itemView.findViewById(R.id.button_delete_worry)
     }
 }
 

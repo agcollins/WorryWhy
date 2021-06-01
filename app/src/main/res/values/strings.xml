@@ -6,9 +6,23 @@
     <string name="worry_text">What\'s worrying you</string>
     <string name="add">Add</string>
     <string name="add_a_worry">Add a worry</string>
-    <string name="action_remove_all">Remove all</string>
+    <string name="remove_all">Remove all</string>
+    <string name="add_worry">Add worry</string>
     <string name="worry_helper">Something that worries you</string>
     <string name="bothering_me_now">Bothering you now</string>
     <string name="delete">Delete</string>
     <string name="details">Details</string>
+    <string name="occurrences_3">Occurrences — 3</string>
+    <string name="template_occurences">Occurrences — %d</string>
+    <string name="sitting_on_couch">Sitting on couch</string>
+    <string name="may_23rd_2021_2_32pm">May 23rd, 2021 — 2:32pm</string>
+    <string name="add_new_worry_occurrence">Add new worry occurrence</string>
+    <string name="you_have_no_worries">You have no worries.</string>
+    <string name="next">next</string>
+    <string name="occurrence_text">What happened</string>
+    <string name="this_is_optional">This is optional</string>
+    <string name="remove_occurrence">Remove occurrence</string>
+    <string name="add_occurrence">Add occurrence</string>
+    <string name="delete_worry">Delete worry</string>
+    <string name="your_worries">Your worries:</string>
 </resources>
