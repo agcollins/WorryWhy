@@ -4,6 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import com.agc.worrywhy.persistence.entity.Worry
+import com.agc.worrywhy.persistence.entity.WorryInstance
+import com.agc.worrywhy.persistence.entity.WorryInstanceContext
+import com.agc.worrywhy.persistence.relationship.WorryTextInstance
+import com.agc.worrywhy.persistence.relationship.WorryWithInstancesAndText
+import com.agc.worrywhy.persistence.view.CompleteWorry
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,7 +22,7 @@ interface WorryDao {
 
     @Transaction
     @Query("SELECT * FROM Worry")
-    fun getWorriesWithInstances(): List<WorryWithInstances>
+    fun getWorriesWithInstancesAndText(): Flow<List<WorryWithInstancesAndText>>
 
     @Query("DELETE FROM Worry")
     suspend fun deleteAll()
@@ -26,7 +32,7 @@ interface WorryDao {
 
     @Transaction
     @Query("SELECT * FROM Worry WHERE uid = :worryId")
-    fun getWorryWithInstances(worryId: Long): Flow<WorryWithInstances>
+    fun getWorryWithInstancesAndText(worryId: Long): Flow<WorryWithInstancesAndText>
 
     @Insert
     suspend fun addWorryInstance(worryInstance: WorryInstance): Long

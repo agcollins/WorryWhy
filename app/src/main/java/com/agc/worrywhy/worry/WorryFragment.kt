@@ -50,6 +50,7 @@ class WorryFragment : Fragment() {
                 requireContext().getString(R.string.template_occurences, it.instances.size)
 
             adapter.instances = it.instances
+            println(it)
         })
     }
 

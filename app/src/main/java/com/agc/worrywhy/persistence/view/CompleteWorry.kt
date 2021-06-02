@@ -1,4 +1,4 @@
-package com.agc.worrywhy.persistence
+package com.agc.worrywhy.persistence.view
 
 import androidx.room.DatabaseView
 

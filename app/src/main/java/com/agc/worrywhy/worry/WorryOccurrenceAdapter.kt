@@ -7,12 +7,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.agc.worrywhy.R
-import com.agc.worrywhy.persistence.WorryInstance
+import com.agc.worrywhy.persistence.entity.WorryInstance
+import com.agc.worrywhy.persistence.relationship.WorryTextInstance
+import com.agc.worrywhy.persistence.relationship.WorryWithInstancesAndText
 
 internal class WorryOccurrenceAdapter(
     private val deleteListener: (WorryInstance) -> Unit
 ) : RecyclerView.Adapter<WorryOccurrenceAdapter.ViewHolder>() {
-    var instances: List<WorryInstance> = emptyList()
+    var instances: List<WorryTextInstance> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -24,7 +26,7 @@ internal class WorryOccurrenceAdapter(
             .let(::ViewHolder)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val instance = instances[position]
+        val instance = instances[position].instance
         holder.occurrenceDatetime.text = instance.date.toString()
         holder.deleteButton.setOnClickListener {
             deleteListener(instance)

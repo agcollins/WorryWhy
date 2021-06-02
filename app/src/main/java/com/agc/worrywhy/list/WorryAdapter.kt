@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
-import com.agc.worrywhy.persistence.CompleteWorry
+import com.agc.worrywhy.persistence.view.CompleteWorry
 import com.agc.worrywhy.R
 import com.google.android.material.card.MaterialCardView
 

@@ -1,4 +1,4 @@
-package com.agc.worrywhy.persistence
+package com.agc.worrywhy.persistence.entity
 
 import androidx.room.*
 

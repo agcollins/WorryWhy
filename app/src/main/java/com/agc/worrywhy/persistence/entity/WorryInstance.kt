@@ -1,14 +1,14 @@
-package com.agc.worrywhy.persistence
+package com.agc.worrywhy.persistence.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.agc.worrywhy.persistence.WorryInstance
+import java.util.*
 
 @Entity(
     foreignKeys = [ForeignKey(
-        entity = WorryInstance::class,
+        entity = Worry::class,
         parentColumns = ["uid"],
         childColumns = ["parentUid"],
         onDelete = ForeignKey.CASCADE,
@@ -18,9 +18,9 @@ import com.agc.worrywhy.persistence.WorryInstance
         Index(value = ["parentUid"])
     ]
 )
-data class WorryInstanceContext(
+data class WorryInstance(
     val parentUid: Long,
-    val content: String
+    val date: Date = Date()
 ) {
     @PrimaryKey(autoGenerate = true)
     var uid: Long = 0
