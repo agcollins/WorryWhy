@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.agc.worrywhy.R
 import com.agc.worrywhy.persistence.entity.WorryInstance
 import com.agc.worrywhy.persistence.relationship.WorryTextInstance
-import com.agc.worrywhy.persistence.relationship.WorryWithInstancesAndText
+import java.text.SimpleDateFormat
+import java.util.*
 
 internal class WorryOccurrenceAdapter(
-    private val deleteListener: (WorryInstance) -> Unit
+    private val deleteListener: (WorryInstance) -> Unit,
 ) : RecyclerView.Adapter<WorryOccurrenceAdapter.ViewHolder>() {
+    private val dateFormat = SimpleDateFormat("MM/dd/yyyy h:mm a", Locale.getDefault())
     var instances: List<WorryTextInstance> = emptyList()
         set(value) {
             field = value
@@ -27,7 +29,7 @@ internal class WorryOccurrenceAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val instance = instances[position].instance
-        holder.occurrenceDatetime.text = instance.date.toString()
+        holder.occurrenceDatetime.text = dateFormat.format(instance.date)
         holder.deleteButton.setOnClickListener {
             deleteListener(instance)
         }
