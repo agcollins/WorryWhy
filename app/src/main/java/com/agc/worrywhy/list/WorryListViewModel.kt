@@ -14,7 +14,7 @@ import javax.inject.Inject
 class WorryListViewModel @Inject constructor(
     private val worryDao: WorryDao
 ) : ViewModel() {
-    val worries = worryDao.getAllComplete().flowOn(Dispatchers.IO).asLiveData()
+    val worries = worryDao.getAllComplete().asLiveData()
 
     fun removeAllWorries() {
         viewModelScope.launch {

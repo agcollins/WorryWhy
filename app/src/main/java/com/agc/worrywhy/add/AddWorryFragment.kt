@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -33,10 +34,19 @@ class AddWorryFragment : Fragment() {
         }
 
         edit_text_add_worry.setOnEditorActionListener { _, i, _ ->
-            if (i == EditorInfo.IME_ACTION_DONE) {
+            if (i == EditorInfo.IME_ACTION_DONE && button_worry_add.isEnabled) {
                 button_worry_add.performClick()
                 true
             } else false
+        }
+
+        edit_text_add_worry.addTextChangedListener {
+            val addEnabled = it.toString().isNotBlank()
+            il_worry_text.helperText =
+                if (!addEnabled) requireContext().getString(R.string.text_must_not_be_blank)
+                else ""
+
+            button_worry_add.isEnabled = addEnabled
         }
 
         button_worry_add.setOnClickListener {

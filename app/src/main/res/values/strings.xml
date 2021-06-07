@@ -25,4 +25,11 @@
     <string name="add_occurrence">Add occurrence</string>
     <string name="delete_worry">Delete worry</string>
     <string name="your_worries">Your worries:</string>
+    <string name="worries">Worries</string>
+    <string name="routine">Routine</string>
+    <string name="coping">Coping</string>
+    <string name="sleep_quality">Sleep Quality</string>
+    <string name="exercise_frequency">Exercise Frequency</string>
+    <string name="add_new">Add new</string>
+    <string name="text_must_not_be_blank">Text must not be blank</string>
 </resources>

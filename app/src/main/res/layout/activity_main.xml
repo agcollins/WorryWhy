@@ -1,38 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:menu="@menu/menu_main"
-        app:navigationIcon="@drawable/ic_baseline_menu_24"
-        app:layout_insetEdge="top"
         android:background="?attr/colorPrimary"
+        app:layout_insetEdge="top"
         />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host"
-        android:layout_marginTop="50dp"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+        app:navGraph="@navigation/nav_graph"
+        />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        app:menu="@menu/menu_bottom_navigation"
+        />
 
 
-<!--    <com.google.android.material.bottomappbar.BottomAppBar-->
-<!--        android:id="@+id/bottomAppBar"-->
-<!--        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"-->
-<!--        app:layout_insetEdge="bottom"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom"-->
-<!--        app:hideOnScroll="true"-->
-<!--        app:menu="@menu/menu_main"-->
-<!--        app:navigationIcon="@drawable/ic_baseline_menu_24" />-->
+    <!--    <com.google.android.material.bottomappbar.BottomAppBar-->
+    <!--        android:id="@+id/bottomAppBar"-->
+    <!--        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"-->
+    <!--        app:layout_insetEdge="bottom"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        app:hideOnScroll="true"-->
+    <!--        app:menu="@menu/menu_main"-->
+    <!--        app:navigationIcon="@drawable/ic_baseline_menu_24" />-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

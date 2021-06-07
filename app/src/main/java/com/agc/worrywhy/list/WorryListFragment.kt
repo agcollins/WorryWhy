@@ -2,7 +2,6 @@ package com.agc.worrywhy.list
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -46,20 +45,22 @@ class WorryListFragment : Fragment() {
             text_no_worries.isVisible = it.isEmpty()
             adapter.worries = it
         })
+
+        fab_add.setOnClickListener {
+            goToWorries()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
+        inflater.inflate(R.menu.menu_worries, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_add_worry -> {
-                findNavController().navigate(
-                    WorryListFragmentDirections.actionWorryListFragmentToAddWorryFragment()
-                )
-                true
-            }
+//            R.id.action_add_worry -> {
+//                goToWorries()
+//                true
+//            }
             R.id.menu_remove_all -> {
                 worryListViewModel.removeAllWorries()
                 true
@@ -67,4 +68,9 @@ class WorryListFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun goToWorries() =
+        findNavController().navigate(
+            WorryListFragmentDirections.actionWorryListFragmentToAddWorryFragment()
+        )
 }
