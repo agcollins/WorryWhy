@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.agc.worrywhy.R
 import com.agc.worrywhy.persistence.entity.WorryInstance
@@ -32,6 +34,15 @@ internal class WorryOccurrenceAdapter(
         holder.occurrenceDatetime.text = dateFormat.format(instance.date)
         holder.deleteButton.setOnClickListener {
             deleteListener(instance)
+        }
+        val content = instances[position].text.firstOrNull()?.content
+        holder.occurrenceText.apply {
+            if (text == null) {
+                isGone = true
+            } else {
+                isGone = false
+                text = content
+            }
         }
     }
 
