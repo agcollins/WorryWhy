@@ -2,13 +2,17 @@ package com.agc.worrywhy.list
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.agc.worrywhy.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_worry_list.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WorryListFragment : Fragment() {
@@ -41,14 +45,24 @@ class WorryListFragment : Fragment() {
 
         recycler_worries.adapter = adapter
 
-        worryListViewModel.worries.observe(viewLifecycleOwner, {
-            text_no_worries.isVisible = it.isEmpty()
-            adapter.worries = it
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            worryListViewModel.worries.collect {
+                requireActivity().invalidateOptionsMenu()
+                if (it == null) return@collect
+                text_no_worries.isVisible = it.isEmpty()
+                adapter.worries = it
+            }
+        }
 
         fab_add.setOnClickListener {
             goToWorries()
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.menu_remove_all).isVisible =
+            worryListViewModel.worries.value?.isNotEmpty() ?: false
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -57,10 +71,6 @@ class WorryListFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-//            R.id.action_add_worry -> {
-//                goToWorries()
-//                true
-//            }
             R.id.menu_remove_all -> {
                 worryListViewModel.removeAllWorries()
                 true

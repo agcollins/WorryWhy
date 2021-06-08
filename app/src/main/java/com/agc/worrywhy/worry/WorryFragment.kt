@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.agc.worrywhy.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_worry_single.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WorryFragment : Fragment() {
@@ -43,15 +46,16 @@ class WorryFragment : Fragment() {
         recycler_worry_occurrences.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         recycler_worry_occurrences.adapter = adapter
 
-        viewModel.worry.observe(viewLifecycleOwner, {
-            if (it == null) return@observe
-            text_worry_content.text = it.worry.content
-            worry_occurrences_title.text =
-                requireContext().getString(R.string.template_occurences, it.instances.size)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.worry.collect {
+                if (it == null) return@collect
+                text_worry_content.text = it.worry.content
+                worry_occurrences_title.text =
+                    requireContext().getString(R.string.template_occurences, it.instances.size)
 
-            adapter.instances = it.instances
-            println(it)
-        })
+                adapter.instances = it.instances
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
