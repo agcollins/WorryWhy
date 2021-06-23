@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.agc.worrywhy.R
+import com.agc.worrywhy.util.dismissKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_occurrence.*
 
@@ -38,8 +39,9 @@ class AddOccurrenceFragment : Fragment() {
 
         button_occurrence_add.setOnClickListener {
             val occurrenceText =
-                edit_text_add_occurrence.text.toString().trim().takeUnless { it.isEmpty() }
+                edit_text_add_occurrence.text.toString().trim().takeUnless(String::isEmpty)
 
+            requireActivity().dismissKeyboard()
             viewModel.addWorryOccurrence(args.worryId, occurrenceText)
             findNavController().popBackStack()
         }
