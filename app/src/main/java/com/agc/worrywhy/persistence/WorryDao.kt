@@ -61,4 +61,7 @@ interface WorryDao {
 
     @Query("DELETE FROM WorryInstance WHERE uid = :instanceId")
     suspend fun deleteWorryInstance(instanceId: Long)
+
+    @Query("UPDATE Worry SET content = :newTitle WHERE uid = :worryId")
+    suspend fun updateTitle(newTitle: String, worryId: Long)
 }

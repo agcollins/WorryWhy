@@ -1,25 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.Worry"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding_worry"
-    style="@style/AppTheme.Worry">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/padding_worry">
+        android:padding="@dimen/padding_worry"
+        >
+
+        <EditText
+            android:id="@+id/edit_text_worry_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:visibility="gone"
+            android:textAppearance="?textAppearanceHeadline4"
+            app:layout_constraintEnd_toStartOf="@+id/image_edit_worry"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_worry_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?textAppearanceHeadline4"
+            app:layout_constraintEnd_toStartOf="@+id/image_edit_worry"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_worry_content"
+            tools:text="ggggggggggggggggggggg"
+            />
+
+        <ImageView
+            android:id="@+id/image_edit_worry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?textAppearanceHeadline4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Taxes and stuff"
+            app:layout_constraintBottom_toBottomOf="@+id/text_worry_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_worry_content"
+            app:srcCompat="@drawable/ic_baseline_edit_24"
             />
 
         <View
@@ -31,7 +62,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_worry_content" />
+            app:layout_constraintTop_toBottomOf="@+id/text_worry_content"
+            />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/worry_occurrences_title"
@@ -48,13 +80,14 @@
             android:id="@+id/recycler_worry_occurrences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintVertical_bias="0"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/worry_occurrences_title"
             app:layout_constraintTop_toBottomOf="@+id/worry_occurrences_title"
+            app:layout_constraintVertical_bias="0"
             tools:itemCount="3"
-            tools:listitem="@layout/item_worry_occurrence" />
+            tools:listitem="@layout/item_worry_occurrence"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

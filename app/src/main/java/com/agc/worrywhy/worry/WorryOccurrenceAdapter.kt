@@ -37,7 +37,7 @@ internal class WorryOccurrenceAdapter(
         }
         val content = instances[position].text.firstOrNull()?.content
         holder.occurrenceText.apply {
-            if (text == null) {
+            if (content == null) {
                 isGone = true
             } else {
                 isGone = false

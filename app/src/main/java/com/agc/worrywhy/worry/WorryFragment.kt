@@ -2,6 +2,8 @@ package com.agc.worrywhy.worry
 
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.EditorInfo
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -40,10 +42,20 @@ class WorryFragment : Fragment() {
         inflater.inflate(R.menu.menu_worry, menu)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong("worryId", args.worryId)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recycler_worry_occurrences.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        recycler_worry_occurrences.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
         recycler_worry_occurrences.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -56,7 +68,37 @@ class WorryFragment : Fragment() {
                 adapter.instances = it.instances
             }
         }
+
+        image_edit_worry.setOnClickListener {
+            image_edit_worry.isGone = true
+            text_worry_content.isGone = true
+            edit_text_worry_content.setText(text_worry_content.text)
+            edit_text_worry_content.isGone = false
+            edit_text_worry_content.requestFocus()
+        }
+
+        edit_text_worry_content.setOnEditorActionListener { _, i, _ ->
+            if (i == EditorInfo.IME_ACTION_DONE) {
+                submitTitle()
+                true
+            } else false
+        }
+
+        edit_text_worry_content.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                submitTitle()
+            }
+        }
     }
+
+    private fun submitTitle() {
+        saveTitle()
+        image_edit_worry.isGone = false
+        text_worry_content.isGone = false
+        edit_text_worry_content.isGone = true
+    }
+
+    private fun saveTitle() = viewModel.saveTitle(edit_text_worry_content.text.toString(), args.worryId)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
