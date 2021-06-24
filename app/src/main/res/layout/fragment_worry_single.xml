@@ -15,20 +15,28 @@
         android:padding="@dimen/padding_worry"
         >
 
-        <EditText
-            android:id="@+id/edit_text_worry_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:maxLines="1"
+            android:hint="@string/title"
             android:visibility="gone"
-            android:textAppearance="?textAppearanceHeadline4"
             app:layout_constraintEnd_toStartOf="@+id/image_edit_worry"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_worry_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textAppearance="?textAppearanceHeadline4"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_worry_content"
@@ -39,7 +47,7 @@
             app:layout_constraintEnd_toStartOf="@+id/image_edit_worry"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_text_worry_content"
+            app:layout_constraintTop_toBottomOf="@id/til_content"
             tools:text="ggggggggggggggggggggg"
             />
 

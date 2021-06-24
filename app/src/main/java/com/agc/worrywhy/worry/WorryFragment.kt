@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isGone
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.agc.worrywhy.R
+import com.agc.worrywhy.util.dismissKeyboard
+import com.agc.worrywhy.util.showKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_worry_single.*
 import kotlinx.coroutines.flow.collect
@@ -73,8 +76,15 @@ class WorryFragment : Fragment() {
             image_edit_worry.isGone = true
             text_worry_content.isGone = true
             edit_text_worry_content.setText(text_worry_content.text)
-            edit_text_worry_content.isGone = false
+            til_content.isGone = false
             edit_text_worry_content.requestFocus()
+            edit_text_worry_content.showKeyboard()
+        }
+
+        edit_text_worry_content.addTextChangedListener {
+            til_content.helperText = if (it.toString().isBlank()) {
+                 requireContext().getString(R.string.text_must_not_be_blank)
+            } else ""
         }
 
         edit_text_worry_content.setOnEditorActionListener { _, i, _ ->
@@ -92,10 +102,13 @@ class WorryFragment : Fragment() {
     }
 
     private fun submitTitle() {
-        saveTitle()
-        image_edit_worry.isGone = false
-        text_worry_content.isGone = false
-        edit_text_worry_content.isGone = true
+        if (edit_text_worry_content.text.toString().isNotBlank()) {
+            saveTitle()
+            image_edit_worry.isGone = false
+            text_worry_content.isGone = false
+            requireActivity().dismissKeyboard()
+            til_content.isGone = true
+        }
     }
 
     private fun saveTitle() = viewModel.saveTitle(edit_text_worry_content.text.toString(), args.worryId)
