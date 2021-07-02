@@ -1,18 +1,30 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.agc.worrywhy.MainActivity">
-<!--    <item-->
-<!--        android:id="@+id/action_add_worry"-->
-<!--        android:orderInCategory="99"-->
-<!--        android:title="@string/add_worry"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:icon="@drawable/ic_baseline_add_24"-->
-<!--        />-->
+    tools:context="com.agc.worrywhy.MainActivity"
+    >
+    <!--    <item-->
+    <!--        android:id="@+id/action_add_worry"-->
+    <!--        android:orderInCategory="99"-->
+    <!--        android:title="@string/add_worry"-->
+    <!--        app:showAsAction="ifRoom"-->
+    <!--        android:icon="@drawable/ic_baseline_add_24"-->
+    <!--        />-->
+
+    <item
+        android:id="@+id/menu_search_worries"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:orderInCategory="2"
+        android:title="@string/search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom"
+        />
 
     <item
         android:id="@+id/menu_remove_all"
         android:orderInCategory="100"
         android:title="@string/remove_all"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        />
 </menu>

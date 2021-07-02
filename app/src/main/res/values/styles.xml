@@ -13,6 +13,7 @@
         <item name="colorAccent">@color/gray</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
+        <item name="android:fontFamily">@font/coolvetica</item>
     </style>
 
     <style name="AppTheme.Worry">

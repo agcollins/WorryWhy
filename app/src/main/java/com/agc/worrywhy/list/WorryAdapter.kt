@@ -19,10 +19,32 @@ internal class WorryAdapter(
      * When set, automatically updates the adapter.
      */
     var worries: List<CompleteWorry> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
+
+    fun update(worries: List<CompleteWorry>) {
+        this.worries = worries
+        worriesCopy.clear()
+        worriesCopy.addAll(worries)
+        notifyDataSetChanged()
+    }
+
+    private var worriesCopy: MutableList<CompleteWorry> = mutableListOf()
+
+    fun filter(text: String) {
+        val newList = mutableListOf<CompleteWorry>()
+        if (text.isEmpty()) {
+            newList.addAll(worriesCopy)
+        } else {
+            val lowercaseText = text.lowercase()
+            for(worry in worriesCopy) {
+                if (worry.content.lowercase().contains(lowercaseText)) {
+                    newList.add(worry)
+                }
+            }
         }
+
+        worries = newList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context).inflate(

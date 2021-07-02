@@ -2,7 +2,7 @@ package com.agc.worrywhy.list
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.app.ActivityCompat.invalidateOptionsMenu
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -50,7 +50,7 @@ class WorryListFragment : Fragment() {
                 requireActivity().invalidateOptionsMenu()
                 if (it == null) return@collect
                 text_no_worries.isVisible = it.isEmpty()
-                adapter.worries = it
+                adapter.update(it)
             }
         }
 
@@ -63,6 +63,18 @@ class WorryListFragment : Fragment() {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.menu_remove_all).isVisible =
             worryListViewModel.worries.value?.isNotEmpty() ?: false
+
+        val searchView = (menu.findItem(R.id.menu_search_worries).actionView as SearchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                query?.let(adapter::filter)
+                return true
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -71,6 +83,10 @@ class WorryListFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.menu_search_worries -> {
+
+                true
+            }
             R.id.menu_remove_all -> {
                 worryListViewModel.removeAllWorries()
                 true

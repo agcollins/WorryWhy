@@ -33,4 +33,9 @@
     <string name="add_new">Add new</string>
     <string name="text_must_not_be_blank">Text must not be blank</string>
     <string name="title">Title</string>
+    <string name="list">List</string>
+    <string name="calendar">Calendar</string>
+    <string name="app_label">WorryWhy</string>
+    <string name="search_hint">Worry content</string>
+    <string name="search">Search</string>
 </resources>

@@ -2,7 +2,6 @@ package com.agc.worrywhy
 
 import android.os.Bundle
 import androidx.annotation.IdRes
-import androidx.annotation.NavigationRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar_main)
+
         navigation_bottom.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_routine -> {
