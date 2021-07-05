@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/worryListFragment"
+    app:startDestination="@id/worryTabsFragment"
     >
 
     <fragment
@@ -55,6 +55,20 @@
         <action
             android:id="@+id/action_worryFragment_to_addOccurrenceFragment"
             app:destination="@id/addOccurrenceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/worryTabsFragment"
+        android:name="com.agc.worrywhy.tabs.WorryTabsFragment"
+        android:label="WorryTabsFragment"
+        >
+        <action
+            android:id="@+id/action_worryTabsFragment_to_worryFragment"
+            app:destination="@id/worryFragment"
+            />
+        <action
+            android:id="@+id/action_worryTabsFragment_to_addWorryFragment"
+            app:destination="@id/addWorryFragment"
+            />
     </fragment>
 
 </navigation>

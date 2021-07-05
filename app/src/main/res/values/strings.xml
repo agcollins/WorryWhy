@@ -38,4 +38,9 @@
     <string name="app_label">WorryWhy</string>
     <string name="search_hint">Worry content</string>
     <string name="search">Search</string>
+
+    <plurals name="times_template_calendar">
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d times</item>
+    </plurals>
 </resources>

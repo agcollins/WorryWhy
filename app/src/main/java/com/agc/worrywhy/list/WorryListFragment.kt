@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.agc.worrywhy.R
+import com.agc.worrywhy.tabs.WorryTabsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_worry_list.*
 import kotlinx.coroutines.flow.collect
@@ -16,13 +17,20 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WorryListFragment : Fragment() {
+    private val callbacks by lazy {
+        requireParentFragment() as Callbacks
+    }
+
+    interface Callbacks {
+        fun onAddWorry()
+        fun onTapWorry(worryId: Long)
+    }
+
     private val worryListViewModel: WorryListViewModel by viewModels()
     private val adapter = WorryAdapter(
         clickListener = { worry ->
-            findNavController().navigate(
-                WorryListFragmentDirections.actionWorryListFragmentToWorryFragment(
-                    worry.uid
-                )
+            callbacks.onTapWorry(
+                worry.uid
             )
         }
     )
@@ -84,7 +92,6 @@ class WorryListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_search_worries -> {
-
                 true
             }
             R.id.menu_remove_all -> {
@@ -95,8 +102,5 @@ class WorryListFragment : Fragment() {
         }
     }
 
-    private fun goToWorries() =
-        findNavController().navigate(
-            WorryListFragmentDirections.actionWorryListFragmentToAddWorryFragment()
-        )
+    private fun goToWorries() = callbacks.onAddWorry()
 }

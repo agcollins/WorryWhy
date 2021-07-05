@@ -7,10 +7,11 @@ import androidx.room.Transaction
 import com.agc.worrywhy.persistence.entity.Worry
 import com.agc.worrywhy.persistence.entity.WorryInstance
 import com.agc.worrywhy.persistence.entity.WorryInstanceContext
-import com.agc.worrywhy.persistence.relationship.WorryTextInstance
 import com.agc.worrywhy.persistence.relationship.WorryWithInstancesAndText
 import com.agc.worrywhy.persistence.view.CompleteWorry
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
+import java.time.YearMonth
 
 @Dao
 interface WorryDao {
@@ -64,4 +65,20 @@ interface WorryDao {
 
     @Query("UPDATE Worry SET content = :newTitle WHERE uid = :worryId")
     suspend fun updateTitle(newTitle: String, worryId: Long)
+
+    @Query(
+        """
+        SELECT day, COUNT(DISTINCT uid) AS count FROM (
+            SELECT
+                STRFTIME("%m", DATE(date/1000, 'unixepoch')) AS month,
+                STRFTIME("%d", DATE(date/1000, 'unixepoch')) AS day,
+                uid
+            FROM WorryInstance
+            WHERE month = :month
+        ) GROUP BY day
+    """
+    )
+    fun getWorriesInMonth(month: YearMonth): Flow<List<DayWorries>>
 }
+
+data class DayWorries(val day: Int, val count: Int)
