@@ -9,7 +9,6 @@
     <fragment
         android:id="@+id/addWorryFragment"
         android:name="com.agc.worrywhy.add.AddWorryFragment"
-        android:label="add_worry_fragment"
         tools:layout="@layout/fragment_add_worry" >
         <action
             android:id="@+id/action_addWorryFragment_to_addOccurrenceFragment"
@@ -22,7 +21,6 @@
     <fragment
         android:id="@+id/worryListFragment"
         android:name="com.agc.worrywhy.list.WorryListFragment"
-        android:label="fragment_worry_list"
         tools:layout="@layout/fragment_worry_list" >
         <action
             android:id="@+id/action_worryListFragment_to_addWorryFragment"
@@ -38,7 +36,6 @@
     <fragment
         android:id="@+id/addOccurrenceFragment"
         android:name="com.agc.worrywhy.add.AddOccurrenceFragment"
-        android:label="AddOccurrenceFragment"
         tools:layout="@layout/fragment_add_occurrence">
         <argument
             android:name="worryId"
@@ -47,7 +44,6 @@
     <fragment
         android:id="@+id/worryFragment"
         android:name="com.agc.worrywhy.worry.WorryFragment"
-        android:label="WorryFragment"
         tools:layout="@layout/fragment_worry_single">
         <argument
             android:name="worryId"
@@ -59,7 +55,6 @@
     <fragment
         android:id="@+id/worryTabsFragment"
         android:name="com.agc.worrywhy.tabs.WorryTabsFragment"
-        android:label="WorryTabsFragment"
         >
         <action
             android:id="@+id/action_worryTabsFragment_to_worryFragment"
