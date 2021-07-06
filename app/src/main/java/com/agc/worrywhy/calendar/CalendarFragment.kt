@@ -11,8 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import com.agc.worrywhy.R
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
+import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
+import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_worry_calendar.*
 import kotlinx.coroutines.flow.collect
@@ -25,8 +27,8 @@ import java.util.*
 @AndroidEntryPoint
 class CalendarFragment : Fragment() {
     private val viewModel: CalendarViewModel by viewModels()
-    private val binder by lazy {
-        CalendarBinder()
+    private val dayBinder by lazy {
+        CalendarDayBinder()
     }
 
     override fun onCreateView(
@@ -42,7 +44,17 @@ class CalendarFragment : Fragment() {
 
         val calendar = view.findViewById<CalendarView>(R.id.calendar)
 
-        calendar.dayBinder = binder
+        calendar.dayBinder = dayBinder
+        calendar.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthHeaderContainer> {
+            override fun bind(container: MonthHeaderContainer, month: CalendarMonth) {
+                container.month.text = month.yearMonth.month.toString().lowercase()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            }
+
+            override fun create(view: View): MonthHeaderContainer {
+                return MonthHeaderContainer(view)
+            }
+        }
 
         val currentMonth = YearMonth.now()
         val firstMonth = currentMonth.minusMonths(0)
@@ -54,13 +66,13 @@ class CalendarFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.monthWorries.collect {
                 if (it == null) return@collect
-                binder.map = it
+                dayBinder.map = it
                 calendar.notifyCalendarChanged()
             }
         }
     }
 
-    inner class CalendarBinder : DayBinder<CalendarViewContainer> {
+    inner class CalendarDayBinder : DayBinder<CalendarViewContainer> {
         var map: Map<LocalDate, Int> = emptyMap()
         override fun bind(container: CalendarViewContainer, day: CalendarDay) {
             container.day.text = day.date.dayOfMonth.toString()
