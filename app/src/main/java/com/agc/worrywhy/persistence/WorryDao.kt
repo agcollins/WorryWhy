@@ -10,7 +10,6 @@ import com.agc.worrywhy.persistence.entity.WorryInstanceContext
 import com.agc.worrywhy.persistence.relationship.WorryWithInstancesAndText
 import com.agc.worrywhy.persistence.view.CompleteWorry
 import kotlinx.coroutines.flow.Flow
-import java.time.LocalDate
 import java.time.YearMonth
 
 @Dao
@@ -79,6 +78,20 @@ interface WorryDao {
     """
     )
     fun getWorriesInMonth(month: YearMonth): Flow<List<DayWorries>>
+
+    @Query(
+        """
+        SELECT month, day, COUNT(DISTINCT uid) AS count FROM (
+            SELECT 
+                STRFTIME("%m", DATE(date/1000, 'unixepoch')) AS month,
+                STRFTIME("%d", DATE(date/1000, 'unixepoch')) AS day,
+                uid
+            FROM WorryInstance
+        ) GROUP BY day
+        """
+    )
+    fun getAllInstances(): Flow<List<MonthDayWorries>>
 }
 
+data class MonthDayWorries(val month: Int, val day: Int, val count: Int)
 data class DayWorries(val day: Int, val count: Int)

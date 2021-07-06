@@ -20,7 +20,7 @@ class WorryListViewModel @Inject constructor(
     val worries: StateFlow<List<CompleteWorry>?> = mutableFlow
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             mutableFlow.emitAll(worryRepository.getAllWorries())
         }
     }
