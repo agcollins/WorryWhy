@@ -7,4 +7,5 @@ import com.kizitonwose.calendarview.ui.ViewContainer
 
 class MonthHeaderContainer(view: View) : ViewContainer(view) {
     val month: TextView = view.findViewById(R.id.text_month)
+    val summary: TextView = view.findViewById(R.id.text_month_summary)
 }

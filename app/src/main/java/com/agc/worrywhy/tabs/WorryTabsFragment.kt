@@ -13,9 +13,10 @@ import com.agc.worrywhy.list.WorryListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_worry_tabs.*
+import java.time.LocalDate
 
 @AndroidEntryPoint
-class WorryTabsFragment : Fragment(), WorryListFragment.Callbacks {
+class WorryTabsFragment : Fragment(), WorryListFragment.Callbacks, CalendarFragment.Callbacks {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,6 +59,14 @@ class WorryTabsFragment : Fragment(), WorryListFragment.Callbacks {
         findNavController().navigate(
             WorryTabsFragmentDirections.actionWorryTabsFragmentToWorryFragment(
                 worryId
+            )
+        )
+    }
+
+    override fun onCalendarDayClicked(localDate: LocalDate) {
+        findNavController().navigate(
+            WorryTabsFragmentDirections.actionWorryTabsFragmentToWorryDayFragment(
+                localDate
             )
         )
     }

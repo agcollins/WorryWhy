@@ -43,4 +43,9 @@
         <item quantity="one">%d time</item>
         <item quantity="other">%d times</item>
     </plurals>
+
+    <plurals name="template_month_header">
+        <item quantity="one">%d worry</item>
+        <item quantity="other">%d worries</item>
+    </plurals>
 </resources>

@@ -31,4 +31,12 @@
         android:textAppearance="?textAppearanceHeadline4"
         android:layout_centerHorizontal="true"
         />
+    <TextView
+        android:id="@+id/text_month_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="128 worries"
+        android:layout_alignBottom="@id/text_month"
+        android:layout_centerHorizontal="true"
+        />
 </RelativeLayout>

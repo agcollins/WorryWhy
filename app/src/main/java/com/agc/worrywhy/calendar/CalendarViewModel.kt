@@ -2,7 +2,6 @@ package com.agc.worrywhy.calendar
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agc.worrywhy.repository.MonthWorries
 import com.agc.worrywhy.repository.WorryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.YearMonth
 import javax.inject.Inject
@@ -20,20 +18,38 @@ import javax.inject.Inject
 class CalendarViewModel @Inject constructor(
     private val repository: WorryRepository
 ) : ViewModel() {
-    private val mutableStateFlow = MutableStateFlow<Map<LocalDate, Int>?>(null)
-    val monthWorries: StateFlow<Map<LocalDate, Int>?> = mutableStateFlow
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getWorriesForMonth(YearMonth.now()).map { worries ->
-                val map = mutableMapOf<LocalDate, Int>()
+    private val monthHeaderMutable = MutableStateFlow<Map<YearMonth, MonthSummary>?>(null)
+    val monthHeader: StateFlow<Map<YearMonth, MonthSummary>?> = monthHeaderMutable
 
-                for (day in worries.worries) {
-                    map[day.day] = day.count
+    private val dayStateFlow = MutableStateFlow<Map<LocalDate, Int>?>(null)
+    val monthWorries: StateFlow<Map<LocalDate, Int>?> = dayStateFlow
+
+    init {
+        select()
+    }
+
+    data class MonthSummary(val month: YearMonth, val count: Int)
+
+    private fun select() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getAllMonthWorries().map { months ->
+                val map = mutableMapOf<LocalDate, Int>()
+                val monthMap = mutableMapOf<YearMonth, MonthSummary>()
+
+                for (month in months) {
+                    var countInMonth = 0
+                    for (worries in month.worries) {
+                        map[worries.day] = worries.count
+                        countInMonth += worries.count
+                    }
+
+                    monthMap[month.yearMonth] = MonthSummary(month.yearMonth, countInMonth)
                 }
 
+                monthHeaderMutable.value = monthMap
                 map
             }.also {
-                mutableStateFlow.emitAll(it)
+                dayStateFlow.emitAll(it)
             }
         }
     }
